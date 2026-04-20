@@ -50,12 +50,30 @@ jobs:
       - name: Deploy App
         run: |
           ssh -o StrictHostKeyChecking=no -i key.pem ubuntu@$IP << 'EOF'
-          cd /home/ubuntu/app
-          sudo docker stop app || true
-          sudo docker rm app || true
-          sudo docker build -t app .
-          sudo docker run -d -p 3000:3000 --name app app
+            cd /home/ubuntu/app
+
+            echo "==== FILES ===="
+            ls -la
+
+            echo "==== DOCKER BUILD ===="
+            sudo docker build -t app .
+
+            echo "==== STOP OLD CONTAINER ===="
+            sudo docker stop app || true
+            sudo docker rm app || true
+
+            echo "==== RUN CONTAINER ===="
+            sudo docker run -d -p 3000:3000 --name app app
+
+            echo "==== RUNNING CONTAINERS ===="
+            sudo docker ps -a
+
+            echo "==== LOGS ===="
+            sudo docker logs app || true
           EOF
+
+      - name: Wait for app
+        run: sleep 15
 
       - name: Test App
         run: curl http://$IP:3000
