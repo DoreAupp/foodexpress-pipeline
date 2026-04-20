@@ -1,3 +1,3 @@
-ami_id        = "ami-0fc5d935ebf8bc3bc"
+ami_id        = "ami-0ec10929233384c7f"
 key_name      = "Act10"
-my_ip         = "YOUR_IP/32"
+my_ip         = "203.147.140.236/32"
